@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "45546025498",
+    "firebase_url": "https://yachtspot-82926.firebaseio.com",
+    "project_id": "yachtspot-82926",
+    "storage_bucket": "yachtspot-82926.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45546025498:android:f8b1c1529965398a8a97a3",
+        "android_client_info": {
+          "package_name": "tk.liammurray.yachtspot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45546025498-bl20p9ah0h34l6kbq1br40m93aks6jjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBfXpAqzjsVPdGawFY5YTqX16zq4_biPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45546025498-bl20p9ah0h34l6kbq1br40m93aks6jjf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
