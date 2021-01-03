@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:yachtspot/constants.dart';
 
@@ -161,7 +163,10 @@ class _AccountScreenState extends State<AccountScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('No'),
+                      child: Text(
+                        'No',
+                        style: TextStyle(color: kBlueColor),
+                      ),
                     ),
                     FlatButton(
                       onPressed: () {
@@ -171,7 +176,10 @@ class _AccountScreenState extends State<AccountScreen> {
                           ModalRoute.withName('/welcome'),
                         );
                       },
-                      child: Text('Yes'),
+                      child: Text(
+                        'Yes',
+                        style: TextStyle(color: kRedColor),
+                      ),
                     ),
                   ],
                 ),

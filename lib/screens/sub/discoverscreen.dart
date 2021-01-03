@@ -78,13 +78,6 @@ class DiscoverScreenState extends State<DiscoverScreen> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-              child: Text(
-                'Discover',
-                style: kbottomWelcomeTextStyle.copyWith(fontSize: 25),
-              ),
-            ),
             Expanded(
               child: TabBarView(
                 children: [

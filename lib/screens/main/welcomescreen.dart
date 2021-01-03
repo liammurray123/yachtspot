@@ -50,7 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       label: 'Create an account',
                       color: kLightBlueColor,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, '/onboarding');
                       },
                     ),
                   ],

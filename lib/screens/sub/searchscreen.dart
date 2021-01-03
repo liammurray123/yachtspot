@@ -25,13 +25,6 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'Search',
-              style: kbottomWelcomeTextStyle.copyWith(fontSize: 25),
-            ),
-          ),
           Card(
             elevation: 4.0,
             child: TextField(

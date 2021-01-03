@@ -14,14 +14,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.pushNamed(context, '/home');
-  }
-
-  Widget _buildImage(String assetName) {
-    return Align(
-      child: Image.asset('assets/images/$assetName.png', width: 350.0),
-      alignment: Alignment.bottomCenter,
-    );
+    Navigator.pushNamed(context, '/signup');
   }
 
   @override
@@ -39,43 +32,34 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       key: introKey,
       pages: [
         PageViewModel(
-          title: "Fractional shares",
-          body:
-              "Instead of having to buy an entire share, invest any amount you want.",
-          image: _buildImage('background-image'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Learn as you go",
-          body:
-              "Download the Stockpile app and master the market with our mini-lesson.",
-          image: _buildImage('background-image'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Kids and teens",
-          body:
-              "Kids and teens can track their stocks 24/7 and place trades that you approve.",
-          image: _buildImage('background-image'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Another title page",
-          body: "Another beautiful body text for this example onboarding",
-          image: _buildImage('background-image'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Title of last page",
-          bodyWidget: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Click on ", style: bodyStyle),
-              Icon(Icons.edit),
-              Text(" to edit a post", style: bodyStyle),
-            ],
+          title: "Find",
+          body: "Easily search for boat info and more",
+          image: Icon(
+            FeatherIcons.search,
+            size: 200,
+            color: kBlueColor,
           ),
-          image: _buildImage('background-image'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Connect",
+          body:
+              "With contact info available, get in touch with other boaters around you",
+          image: Icon(
+            FeatherIcons.user,
+            size: 200,
+            color: kBlueColor,
+          ),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "What now?",
+          body: "Get started by signing up, and registering your boat",
+          image: Icon(
+            FeatherIcons.arrowRight,
+            size: 200,
+            color: kBlueColor,
+          ),
           decoration: pageDecoration,
         ),
       ],
@@ -86,7 +70,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       nextFlex: 0,
       skip: const Text('Skip'),
       next: const Icon(FeatherIcons.arrowRight),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      done:
+          const Text('Sign up', style: TextStyle(fontWeight: FontWeight.w600)),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
         color: Color(0xFFBDBDBD),
