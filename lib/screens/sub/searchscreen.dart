@@ -72,6 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           snapshot.data.docs.map((DocumentSnapshot document) {
                         return BoatCard(
                           name: document.data()['name'],
+                          image: document.data()['image'],
                           manufacturer: document.data()['manufacturer'],
                           model: document.data()['model'],
                           price: document.data()['price'],

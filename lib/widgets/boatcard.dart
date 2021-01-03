@@ -16,18 +16,21 @@ const kBoatCardModelStyle = TextStyle(
 class BoatCard extends StatelessWidget {
   BoatCard(
       {this.name,
+      this.image,
       this.manufacturer,
       this.model,
       this.owner,
       this.location,
-      this.email, this.price});
+      this.email,
+      this.price});
   final String name;
+  final String image;
   final String manufacturer;
   final String model;
   final String owner;
   final String location;
   final String email;
-  final int price;
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class BoatCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => BoatDetailPage(
+              image: image,
               name: name,
               manufacturer: manufacturer,
               model: model,
@@ -55,8 +59,9 @@ class BoatCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
-              image: AssetImage('assets/images/welcome-background-image.png'),
-              fit: BoxFit.cover),
+            image: NetworkImage(image.toString()),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Container(
           padding: EdgeInsets.all(15),

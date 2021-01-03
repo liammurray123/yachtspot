@@ -3,22 +3,34 @@ import 'package:flutter/rendering.dart';
 import 'package:yachtspot/constants.dart';
 import 'package:yachtspot/widgets/boatcard.dart';
 import 'package:url_launcher/url_launcher.dart';
-class BoatDetailPage extends StatelessWidget {
+import 'package:firebase_storage/firebase_storage.dart';
+
+final FirebaseStorage firebase_storage = FirebaseStorage.instance;
+
+class BoatDetailPage extends StatefulWidget {
   BoatDetailPage(
       {this.name,
+      this.image,
       this.manufacturer,
       this.model,
       this.owner,
       this.location,
-      this.email, this.price});
+      this.email,
+      this.price});
   final String name;
+  final String image;
   final String manufacturer;
   final String model;
   final String owner;
   final String location;
   final String email;
-  final int price;
+  final String price;
 
+  @override
+  _BoatDetailPageState createState() => _BoatDetailPageState();
+}
+
+class _BoatDetailPageState extends State<BoatDetailPage> {
   final List<Widget> boatFieldsArrayComplete = [];
 
   void createFieldCards() {
@@ -32,15 +44,14 @@ class BoatDetailPage extends StatelessWidget {
       'Email'
     ];
 
-
     List<String> boatFieldsArray = [
-      name,
-      manufacturer,
-      model,
-      '\$${price.toString()}',
-      location,
-      owner,
-      email
+      widget.name,
+      widget.manufacturer,
+      widget.model,
+      '\$${widget.price.toString()}',
+      widget.location,
+      widget.owner,
+      widget.email
     ];
     for (var i = 0; i < boatFieldsArray.length; i++) {
       var newWidget = Card(
@@ -68,7 +79,7 @@ class BoatDetailPage extends StatelessWidget {
         var newGestureWidget = GestureDetector(
           child: newWidget,
           onTap: () {
-            launch('mailto:$email');
+            launch('mailto:${widget.email}');
           },
         );
         boatFieldsArrayComplete.add(newGestureWidget);
@@ -87,15 +98,16 @@ class BoatDetailPage extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
             title: Text(
-              name,
+              widget.name,
               style: kBoatCardNameStyle.copyWith(fontSize: 25),
             ),
             backgroundColor: kBlueColor,
             expandedHeight: 200.0,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                  'assets/images/welcome-background-image.png',
-                  fit: BoxFit.cover),
+              background: Image.network(
+                widget.image.toString(),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SliverList(

@@ -273,47 +273,47 @@ class _MyBoatsPageState extends State<MyBoatsPage> {
                   scrollDirection: Axis.vertical,
                   children: snapshot.data.docs.map((DocumentSnapshot document) {
                     return Dismissible(
-                      key: ValueKey(document.id.toString()),
-                      onDismissed: (direction) {
-                        setState(() {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (_) => AlertDialog(
-                              elevation: 4.0,
-                              title: Text(
-                                  "Are you sure you want to delete ${document.data()['name'].toString()}?"),
-                              actions: [
-                                FlatButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text('No'),
+                      key: ValueKey(
+                        document.id.toString(),
+                      ),
+                      confirmDismiss: (DismissDirection direction) async {
+                        return await showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (_) => AlertDialog(
+                            elevation: 4.0,
+                            title: Text(
+                                "Are you sure you want to delete ${document.data()['name'].toString()}?"),
+                            actions: [
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('No'),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  storage.doc('boats/${document.id}').delete();
+                                  Navigator.pop(context);
+                                },
+                                textColor: Colors.red,
+                                child: Text(
+                                  'Delete',
                                 ),
-                                FlatButton(
-                                  onPressed: () {
-                                    storage
-                                        .doc('boats/${document.id}')
-                                        .delete();
-                                    Navigator.pop(context);
-                                  },
-                                  textColor: Colors.red,
-                                  child: Text(
-                                    'Delete',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        });
+                              ),
+                            ],
+                          ),
+                        );
                       },
                       child: BoatCard(
+                        image: document.data()['image'],
                         name: document.data()['name'],
                         manufacturer: document.data()['manufacturer'],
                         model: document.data()['model'],
                         owner: document.data()['owner'],
                         location: document.data()['location'],
                         email: document.data()['email'],
+                        price: document.data()['price'],
                       ),
                     );
                   }).toList(),

@@ -11,14 +11,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 // Screen and Widget Imports
-import 'package:yachtspot/screens/sub/searchscreen.dart';
 import 'package:yachtspot/widgets/boatcard.dart';
 import 'package:yachtspot/widgets/welcomebutton.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 final FirebaseFirestore storage = FirebaseFirestore.instance;
+final FirebaseStorage firebase_storage = FirebaseStorage.instance;
 User loggedInUser;
 bool showSpinner = false;
 
@@ -27,7 +28,7 @@ String name;
 String manufacturer;
 String model;
 String owner;
-int price;
+String price;
 
 const kNewTextFieldStyle = InputDecoration(
   hintText: 'Enter Value',
@@ -49,6 +50,60 @@ class NewBoatScreen extends StatefulWidget {
 }
 
 class _NewBoatScreenState extends State<NewBoatScreen> {
+  // Get Boat Image
+  File image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        image = File(pickedFile.path);
+        print(image);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  showPopup() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) => AlertDialog(
+        elevation: 4.0,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+                "Only one image is used, it will be displayed on your boat's detail page."),
+          ],
+        ),
+        actions: [
+          FlatButton(
+            onPressed: () async {
+              getImage();
+            },
+            child: Text(
+              'Upload',
+              style: TextStyle(color: kBlueColor),
+            ),
+          ),
+          FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Done',
+              style: TextStyle(color: kBlueColor),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -91,8 +146,7 @@ class _NewBoatScreenState extends State<NewBoatScreen> {
               TextField(
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  price = value as int;
-                  print(price);
+                  price = value;
                 },
                 style: TextStyle(color: kBlueColor),
                 decoration: kNewTextFieldStyle.copyWith(hintText: 'Boat Price'),
@@ -106,14 +160,22 @@ class _NewBoatScreenState extends State<NewBoatScreen> {
                     kNewTextFieldStyle.copyWith(hintText: 'Owner Full Name'),
               ),
               WelcomeButton(
-                  label: 'Register',
+                label: 'Upload Image',
+                color: kBlueColor,
+                onPressed: () async {
+                  showPopup();
+                },
+              ),
+              WelcomeButton(
+                  label: 'Add Your Boat',
                   color: kRedColor,
                   onPressed: () async {
                     try {
                       setState(() {
                         showSpinner = true;
                       });
-                      addToDatabase(name, manufacturer, model, owner);
+                      addToDatabase(image, name, manufacturer, model, owner,
+                          price.toString());
                       Navigator.pop(context);
                       setState(() {
                         showSpinner = false;
@@ -134,10 +196,12 @@ class _NewBoatScreenState extends State<NewBoatScreen> {
 }
 
 void addToDatabase(
+  File image,
   String name,
   String manufacturer,
   String model,
   String owner,
+  String price,
 ) async {
   List<String> splitList = name.split(r"*b");
   List<String> keywordsList = [];
@@ -154,8 +218,12 @@ void addToDatabase(
 // Get City
   List<Placemark> placemark =
       await placemarkFromCoordinates(position.latitude, position.longitude);
-
+// Upload Image to Storage
+  await uploadImage(image: image, boatname: name);
+  String imageURL = await getImageURL(name: name);
   storage.collection('boats').doc().set({
+    'date': DateTime.now(),
+    'image': imageURL,
     'name': name,
     'manufacturer': manufacturer,
     'model': model,
@@ -166,4 +234,21 @@ void addToDatabase(
         "${placemark[0].subAdministrativeArea.toString()}, ${placemark[0].administrativeArea}, ${placemark[0].country.toString()}",
     'keywords': keywordsList
   });
+}
+
+Future uploadImage({BuildContext context, File image, String boatname}) async {
+  try {
+    await firebase_storage
+        .ref('uploads/$boatname-${auth.currentUser.email}.png')
+        .putFile(image);
+  } catch (e) {
+    Navigator.pop(context);
+  }
+}
+
+getImageURL({String name}) async {
+  var URL = await firebase_storage
+      .ref('uploads/$name-${auth.currentUser.email}.png')
+      .getDownloadURL();
+  return URL;
 }
