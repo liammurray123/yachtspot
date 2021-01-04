@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>45546025498-83r6ne2koaanq08fis15cpdjfsa54g1j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.45546025498-83r6ne2koaanq08fis15cpdjfsa54g1j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB6ZkW6YwxoXxYZmUIg2XUL4X9u9eYFomU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>45546025498</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>tk.liammurray.yachtspot</string>
+	<key>PROJECT_ID</key>
+	<string>yachtspot-82926</string>
+	<key>STORAGE_BUCKET</key>
+	<string>yachtspot-82926.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:45546025498:ios:5d9d18941b4b47708a97a3</string>
+	<key>DATABASE_URL</key>
+	<string>https://yachtspot-82926.firebaseio.com</string>
+</dict>
+</plist>
